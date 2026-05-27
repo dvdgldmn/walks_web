@@ -20,7 +20,7 @@ export class SettingsService {
   }
 
   async upsertMany(settings: UpdateSettingDto[]) {
-    return Promise.all(
+    return this.prisma.$transaction(
       settings.map((setting) =>
         this.prisma.setting.upsert({
           where: { key: setting.key },

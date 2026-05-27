@@ -50,6 +50,18 @@ export class AuthService {
     };
   }
 
+  async getProfile(userId: string) {
+    const user = await this.prisma.adminUser.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('User no longer exists');
+    }
+
+    return { id: user.id, email: user.email, role: user.role };
+  }
+
   getCookieName() {
     return 'dosty_admin_token';
   }

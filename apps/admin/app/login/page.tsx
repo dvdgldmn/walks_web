@@ -6,8 +6,8 @@ const API_URL = '';
 const ADMIN_HOME_PATH = '/translations';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('admin@dosty.local');
-  const [password, setPassword] = useState('admin12345');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 

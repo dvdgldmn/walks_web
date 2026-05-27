@@ -37,12 +37,13 @@ CMS workspace for:
    - `npm run dev:admin`
    - `npm run dev:website`
 
-## Default admin credentials
+## Admin credentials
 
-- email: `admin@dosty.local`
-- password: `admin12345`
+Local dev defaults (from `.env`): `admin@dosty.local` / `admin12345`.
 
-Change them in `.env` before production.
+For production, set strong `ADMIN_EMAIL` / `ADMIN_PASSWORD` in `.env.production`
+(see `.env.production.example`) **before** the first seed, and change the password
+after first login. Never deploy with the dev defaults.
 
 ## Notes
 

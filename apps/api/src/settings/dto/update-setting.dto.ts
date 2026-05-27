@@ -1,4 +1,5 @@
-import { IsOptional, IsString, IsObject } from 'class-validator';
+import { IsOptional, IsString, IsObject, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class UpdateSettingDto {
   @IsString()
@@ -10,5 +11,7 @@ export class UpdateSettingDto {
 
 export class UpdateSettingsBulkDto {
   @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => UpdateSettingDto)
   settings?: UpdateSettingDto[];
 }

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { Throttle } from '@nestjs/throttler';
 import { Public } from './decorators/public.decorator';
@@ -34,7 +42,11 @@ export class AuthController {
   }
 
   @Get('me')
-  me(@Req() req: Request & { user?: unknown }) {
-    return req.user ?? null;
+  async me(@Req() req: Request & { user?: { sub?: string } }) {
+    const userId = req.user?.sub;
+    if (!userId) {
+      throw new UnauthorizedException();
+    }
+    return this.authService.getProfile(userId);
   }
 }
