@@ -3,6 +3,7 @@ import { getMedia, getTranslations, Lang } from '../../lib/content';
 import { LandingHero } from '../components/landing/hero';
 import { LandingMarquee } from '../components/landing/marquee';
 import { LandingHow } from '../components/landing/how';
+import { LandingCompetition } from '../components/landing/competition';
 import { LandingSeason } from '../components/landing/season';
 import { LandingFinalCta } from '../components/landing/final-cta';
 import '../landing.css';
@@ -28,6 +29,7 @@ export default async function SsrPreviewPage({ params }: Props) {
       <LandingHero lang={lang} translations={translations} />
       <LandingMarquee translations={translations} />
       <LandingHow translations={translations} />
+      <LandingCompetition translations={translations} media={media} />
       <LandingSeason translations={translations} media={media} />
       <LandingFinalCta translations={translations} media={media} />
     </main>
