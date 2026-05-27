@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { notFound } from 'next/navigation';
 import { getSiteSettings, Lang } from '../lib/content';
 import { getLandingTemplateParts } from './landing-template';
+import './landing.css';
 
 type LangPageProps = {
   params: Promise<{
@@ -51,7 +52,6 @@ export default async function LangHomePage({ params }: LangPageProps) {
         href="https://fonts.googleapis.com/css2?family=Truculenta:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
       />
-      <style dangerouslySetInnerHTML={{ __html: template.styles }} />
       <div dangerouslySetInnerHTML={{ __html: template.markup }} />
       <Script id="landing-lang" strategy="beforeInteractive">
         {`window.__LANDING_LANG__ = ${JSON.stringify(lang)};`}
