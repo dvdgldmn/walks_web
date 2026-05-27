@@ -71,11 +71,11 @@ links (onelink, `/[lang]/contact`, store URLs) baked at render time.
 - Playwright smoke test for the interactive islands before Phase 5.
 - Rollback = revert the offending phase commit (phases are independent commits).
 
-## Open questions for confirmation
-1. **Scope of "1:1"** — strictly pixel-identical, or is minor cleanup (e.g. fixing the
-   pre-existing footer "Impact"→"Get app" wiring) acceptable along the way?
-2. **CSP tightening in Phase 5** — attempt nonce-based script CSP (drop `'unsafe-inline'`),
-   or leave script-src as-is and only tighten style-src? (Next still emits inline hydration
-   scripts; full strict CSP needs nonces.)
-3. **Lottie** — keep loading bodymovin from cdnjs, or self-host the lib to tighten CSP and
-   remove the CDN dependency?
+## Decisions (confirmed)
+1. **Visual = strictly 1:1.** Port pixel-for-pixel; no visual changes during the refactor.
+   Any improvements (alt text, a11y, etc.) happen as a separate pass afterwards.
+2. **CSP — pragmatic (Phase 5).** Drop `'unsafe-inline'` from `style-src` (no inline styles
+   after CSS extraction). Leave `script-src` as-is (Next still emits inline hydration);
+   nonce-based script CSP is out of scope for now.
+3. **Lottie — self-host.** Use the `lottie-web` package (already a website dependency)
+   instead of the cdnjs `<script>`; remove `cdnjs.cloudflare.com` from the CSP.
