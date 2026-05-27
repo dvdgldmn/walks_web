@@ -13,6 +13,9 @@ run-logs/
 
 # scratch / import temp files
 tmp-*.txt
+
+# backups (DB dumps + uploads archives)
+backups/
 uploads/*
 !uploads/.gitkeep
 !uploads/logos/.gitkeep

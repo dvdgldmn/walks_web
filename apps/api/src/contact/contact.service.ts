@@ -1,6 +1,7 @@
 import {
   Injectable,
   InternalServerErrorException,
+  Logger,
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -9,6 +10,8 @@ import { ContactRequestDto } from './dto/contact-request.dto';
 
 @Injectable()
 export class ContactService {
+  private readonly logger = new Logger(ContactService.name);
+
   constructor(private readonly configService: ConfigService) {}
 
   async submit(dto: ContactRequestDto) {
@@ -75,9 +78,11 @@ export class ContactService {
         html,
       });
     } catch (error) {
-      throw new InternalServerErrorException(
-        error instanceof Error ? error.message : 'Failed to send contact email',
+      this.logger.error(
+        'Failed to send contact email',
+        error instanceof Error ? error.stack : String(error),
       );
+      throw new InternalServerErrorException('Failed to send contact email');
     }
 
     return { success: true };
