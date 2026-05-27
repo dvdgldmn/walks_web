@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dosty Walks — Legal Page Template</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Truculenta:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --yellow:#F5C842;
+      --yellow-deep:#e1b634;
+      --maroon:#5A1A2E;
+      --ink:#111111;
+      --ink-2:#5d5d5d;
+      --paper:#fffdf7;
+      --hairline:rgba(17,17,17,.12);
+      --gutter:32px;
+      --max:1320px;
+      --nav-h:72px;
+      --radius:28px;
+      --display-font:'Truculenta',sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Inter',system-ui,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(245,200,66,.18), transparent 28%),
+        linear-gradient(180deg, #fff7d6 0%, var(--paper) 18%, #fff 100%);
+    }
+    img{max-width:100%;display:block}
+    .wrap{width:min(var(--max),calc(100% - var(--gutter) * 2));margin:0 auto}
+    .legal-wrap{width:min(1040px,calc(100% - var(--gutter) * 2));margin:0 auto}
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--maroon);
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 28px;
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 0;
+      cursor: pointer;
+      transition: transform .15s, background .15s;
+      white-space: nowrap;
+    }
+    .btn--ink { background: var(--ink); color: #fff; }
+    .btn--ink:hover { transform: translateY(-1px); background: #2A2A2A; }
+    .btn--yellow { background: var(--yellow); color: var(--maroon); }
+    .btn--yellow:hover { transform: translateY(-1px); background: var(--yellow-deep); }
+    .btn--ghost-dark { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+    .btn--ghost-dark:hover { background: var(--ink); color: #fff; }
+
+    .nav__burger {
+      display: none;
+      width: 44px; height: 44px;
+      border: 0;
+      background: var(--ink);
+      border-radius: 12px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      padding: 0;
+    }
+    .nav__burger span {
+      display: block;
+      width: 18px; height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: transform .25s ease, opacity .25s ease;
+    }
+    .nav__burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__burger.is-open span:nth-child(2) { opacity: 0; }
+    .nav__burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav__panel-brand {
+      font-family: var(--display-font) !important;
+      font-size: 36px;
+      text-transform: uppercase;
+      letter-spacing: -.5px;
+      line-height: 1;
+      margin: 0 0 24px;
+      color: var(--maroon);
+    }
+    .nav__panel {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0; right: 0;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 24px var(--gutter) 28px;
+      border-bottom: 1px solid rgba(17,17,17,.12);
+      z-index: 49;
+      transform: translateY(-12px);
+      opacity: 0;
+      transition: transform .3s cubic-bezier(.2,.7,.2,1), opacity .3s ease;
+      max-height: calc(100vh - 60px);
+      overflow-y: auto;
+      pointer-events: none;
+      visibility: hidden;
+    }
+    .nav__panel.is-open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+    }
+    .nav__panel-links {
+      display: flex; flex-direction: column;
+      margin: 0 0 24px;
+      border-top: 1px solid rgba(17,17,17,.12);
+    }
+    .nav__panel-links a {
+      color: var(--ink);
+      text-decoration: none;
+      font-family: var(--display-font);
+      font-size: 26px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(17,17,17,.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav__panel-links a::after {
+      content: '→';
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      color: rgba(17,17,17,.35);
+      font-weight: 400;
+    }
+    .nav__panel-lang-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+      padding-top: 8px;
+    }
+    .nav__panel-lang-row > span {
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--ink-2);
+    }
+    .nav__panel-lang {
+      display: inline-flex;
+      border: 1px solid rgba(17,17,17,.12);
+      border-radius: 999px;
+      padding: 3px;
+      background: #fff;
+    }
+    .nav__panel-lang button {
+      border: 0; background: transparent;
+      padding: 7px 14px;
+      font-size: 12px; font-weight: 700;
+      color: var(--ink-2);
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .nav__panel-lang button.active { background: var(--ink); color: var(--yellow); }
+    .nav__panel-cta { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 16px; }
+    .nav__panel-cta .btn { flex: 1; min-width: 140px; justify-content: center; }
+    body.menu-open { overflow: hidden; }
+
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      transition: background .25s, color .25s, border-color .25s;
+    }
+    .nav__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+      transform: translateX(25px);
+    }
+    .nav__brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .nav__brand img { height: 38px; width: auto; }
+    .nav__brand-text {
+      font-family: var(--display-font) !important;
+      font-size: 24px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+    .nav__links {
+      display: flex; gap: 28px;
+    }
+    .nav__links a {
+      color: inherit; text-decoration: none; font-size: 16px; font-weight: 400;
+      opacity: .85;
+      transition: opacity .15s;
+    }
+    .nav__links a:hover { opacity: 1; }
+    .nav__right { display: flex; align-items: center; gap: 14px; }
+    .nav__right { transform: translateX(-40px); }
+    .lang {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 3px;
+      background: rgba(0,0,0,.06);
+      backdrop-filter: blur(10px);
+    }
+    .lang button {
+      border: 0; background: transparent;
+      padding: 6px 12px; font-size: 12px; font-weight: 700;
+      border-radius: 999px;
+      color: inherit; opacity: .55;
+      cursor: pointer; font-family: inherit;
+      text-transform: uppercase; letter-spacing: .5px;
+    }
+    .lang button.active { background: var(--ink); color: #fff; opacity: 1; }
+    .nav.on-yellow {
+      color: var(--ink);
+      background: rgba(245, 200, 66, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .nav.on-yellow .lang { background: rgba(0,0,0,.08); }
+    .nav.on-yellow .lang button.active { background: var(--ink); color: var(--yellow); }
+
+    .hero-legal{
+      padding:128px 0 28px;
+    }
+    .hero-legal__frame{
+      position:relative;
+      overflow:hidden;
+      padding:42px;
+      border-radius:36px;
+      background:
+        radial-gradient(circle at top right, rgba(245,200,66,.28), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.98));
+      border:1px solid rgba(17,17,17,.08);
+      box-shadow:0 28px 64px rgba(90,26,46,.08);
+    }
+    .hero-legal__frame::after{
+      content:"LEGAL";
+      position:absolute;
+      right:-18px;
+      bottom:-24px;
+      font-family:var(--display-font);
+      font-size:min(22vw,180px);
+      line-height:.8;
+      letter-spacing:-.05em;
+      color:rgba(17,17,17,.04);
+      pointer-events:none;
+    }
+    .hero-legal h1{
+      margin:18px 0 14px;
+      max-width:8ch;
+      font-family:var(--display-font);
+      font-size:clamp(56px,10vw,140px);
+      line-height:.88;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
+    }
+    .hero-legal p{
+      max-width:760px;
+      margin:0;
+      font-size:18px;
+      line-height:1.6;
+      color:var(--ink-2);
+    }
+    .hero-legal__meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 18px;
+      margin-top:24px;
+      font-size:13px;
+      font-weight:700;
+      color:var(--ink-2);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .legal-shell{
+      padding:24px 0 96px;
+    }
+    .legal-layout{
+      display:block;
+    }
+    .legal-card{
+      max-width:920px;
+      margin:0 auto;
+      padding:28px 28px 10px;
+      border-radius:28px;
+      background:#fff;
+      border:1px solid rgba(17,17,17,.08);
+      box-shadow:0 18px 42px rgba(17,17,17,.05);
+    }
+    .legal-section{
+      padding-bottom:28px;
+      margin-bottom:28px;
+      border-bottom:1px solid rgba(17,17,17,.08);
+    }
+    .legal-section:last-child{
+      border-bottom:0;
+      margin-bottom:0;
+      padding-bottom:8px;
+    }
+    .legal-section h2{
+      margin:0 0 14px;
+      font-family:var(--display-font);
+      font-size:clamp(30px,4vw,52px);
+      line-height:.94;
+      letter-spacing:-.04em;
+      text-transform:uppercase;
+    }
+    .legal-section p,
+    .legal-section li{
+      font-size:16px;
+      line-height:1.75;
+      color:#303030;
+    }
+    .legal-section ul{
+      margin:14px 0 0;
+      padding-left:20px;
+    }
+    .legal-note{
+      margin-top:18px;
+      padding:16px 18px;
+      border-radius:18px;
+      background:rgba(245,200,66,.18);
+      color:#5d4700;
+      font-size:14px;
+      line-height:1.6;
+    }
+    .contact-form{
+      display:grid;
+      gap:18px;
+    }
+    .contact-form__intro{
+      display:grid;
+      gap:12px;
+      margin-bottom:8px;
+    }
+    .contact-form__grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    .contact-form__field{
+      display:grid;
+      gap:8px;
+    }
+    .contact-form__field--full{
+      grid-column:1 / -1;
+    }
+    .contact-form label{
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--maroon);
+    }
+    .contact-form input,
+    .contact-form textarea{
+      width:100%;
+      border:1px solid rgba(17,17,17,.14);
+      border-radius:18px;
+      padding:16px 18px;
+      font:inherit;
+      color:var(--ink);
+      background:#fff;
+      outline:none;
+      transition:border-color .15s ease, box-shadow .15s ease;
+    }
+    .contact-form textarea{
+      min-height:180px;
+      resize:vertical;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus{
+      border-color:rgba(90,26,46,.4);
+      box-shadow:0 0 0 4px rgba(245,200,66,.18);
+    }
+    .contact-form__actions{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .contact-form__status{
+      font-size:14px;
+      color:rgba(17,17,17,.65);
+    }
+    .contact-form__status.is-error{
+      color:#b42318;
+    }
+    .contact-form__status.is-success{
+      color:#067647;
+    }
+
+    footer#contact {
+      background: var(--ink);
+      color: rgba(255,255,255,.85);
+      padding: 96px 0 32px;
+    }
+    footer#contact .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 56px;
+      margin-bottom: 72px;
+    }
+    footer#contact .footer-brand-title {
+      font-family: var(--display-font);
+      font-size: 68px;
+      color: #fff;
+      line-height: .9;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    footer#contact .footer-brand-title em { font-style: normal; color: var(--yellow); }
+    footer#contact .footer-brand p { font-size: 18px; max-width: 380px; opacity: .65; }
+    footer#contact .footer-social { display: flex; gap: 12px; margin-top: 22px; }
+    footer#contact .footer-social a {
+      width: 46px; height: 46px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.15);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      transition: background .15s;
+    }
+    footer#contact .footer-social a:hover { background: rgba(255,255,255,.08); }
+    footer#contact .footer-col h5 {
+      font-size: 13px; letter-spacing: 1.7px; text-transform: uppercase;
+      font-weight: 700; color: rgba(255,255,255,.5);
+      margin-bottom: 22px;
+    }
+    footer#contact .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
+    footer#contact .footer-col a { color: rgba(255,255,255,.85); text-decoration: none; font-size: 18px; }
+    footer#contact .footer-col a:hover { color: var(--yellow); }
+    button.btn, button.store-badge, button.footer-social-btn { font-family: inherit; }
+    footer#contact .footer-social button {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.2);
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      transition: background .15s ease;
+      cursor: pointer;
+      padding: 0;
+    }
+    footer#contact .footer-social button:hover { background: rgba(255,255,255,.1); }
+    footer#contact .footer-col button {
+      border: 0; background: transparent;
+      color: rgba(255,255,255,.85);
+      font-size: 18px;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 0;
+      text-align: left;
+    }
+    footer#contact .footer-col button:hover { color: var(--yellow); }
+
+    footer#contact .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      font-size: 15px; opacity: .5;
+      flex-wrap: wrap; gap: 16px;
+    }
+
+    @media (max-width: 980px){
+      :root{--gutter:22px}
+      .nav__links{display:none}
+      .nav__burger{display:inline-flex}
+      footer#contact .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; margin-bottom: 64px; }
+      footer#contact .footer-brand-title { font-size: 56px; }
+      footer#contact .footer-brand p { font-size: 16px; max-width: 340px; }
+      footer#contact .footer-col a,
+      footer#contact .footer-col button { font-size: 16px; }
+    }
+    @media (max-width: 560px){
+      :root{--gutter:18px;--nav-h:60px}
+      .nav__brand{
+        width:44px;
+        height:44px;
+        background:#fff;
+        border-radius:12px;
+        justify-content:center;
+        box-shadow:0 2px 8px rgba(0,0,0,.06);
+      }
+      .nav__brand img{width:32px;height:32px}
+      .nav__brand-text{display:none}
+      .nav__right .btn--ink{display:none}
+      .lang{display:none}
+      .nav__panel{display:block}
+      .hero-legal{padding:32px 0 18px}
+      .hero-legal__frame{padding:26px 22px 30px;border-radius:28px}
+      .hero-legal p{font-size:16px}
+      .legal-card{padding:22px 20px 6px}
+      .legal-section p,.legal-section li{font-size:15px;line-height:1.7}
+      .contact-form__grid{grid-template-columns:1fr}
+      footer#contact .footer-grid { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+      footer#contact .footer-brand-title { font-size: 40px; }
+      footer#contact .footer-brand p { font-size: 15px; max-width: 320px; }
+      footer#contact .footer-col a,
+      footer#contact .footer-col button { font-size: 14px; }
+      footer#contact .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav on-yellow" id="nav">
+  <div class="wrap nav__inner">
+    <a href="Dosty Walks Landing v2.html#top" class="nav__brand">
+      <img src="assets/brand/mascot-thumb-up.png" alt="">
+      <span class="nav__brand-text">Dosty Walks</span>
+    </a>
+    <div class="nav__links">
+      <a href="Dosty Walks Landing v2.html#how">How it works</a>
+      <a href="Dosty Walks Landing v2.html#season">Seasons</a>
+      <a href="/az/shelter" data-shelter-link>Shelter</a>
+      <a href="Dosty Walks Landing v2.html#download">Download</a>
+    </div>
+    <div class="nav__right">
+      <div class="lang">
+        <button type="button" class="active">AZ</button>
+        <button type="button">EN</button>
+      </div>
+      <a href="Dosty Walks Landing v2.html#download" class="btn btn--ink">Get App</a>
+      <button type="button" class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav__panel" id="navPanel" aria-hidden="true">
+    <h3 class="nav__panel-brand">Dosty Walks</h3>
+    <nav class="nav__panel-links" aria-label="Main menu">
+      <a href="Dosty Walks Landing v2.html#how">How it works</a>
+      <a href="Dosty Walks Landing v2.html#season">Seasons</a>
+      <a href="/az/shelter" data-shelter-link>Shelter</a>
+      <a href="Dosty Walks Landing v2.html#download">Download</a>
+    </nav>
+    <div class="nav__panel-lang-row">
+      <span>Language</span>
+      <div class="nav__panel-lang">
+        <button type="button" class="active">AZ</button>
+        <button type="button">EN</button>
+      </div>
+    </div>
+    <div class="nav__panel-cta">
+      <a href="Dosty Walks Landing v2.html#download" class="btn btn--maroon">Get App</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="hero-legal">
+    <div class="legal-wrap">
+      <div class="hero-legal__frame">
+        <span class="eyebrow">Template · Legal Page</span>
+        <h1>Privacy<br>Policy.</h1>
+        <p>
+          This is a reusable template for legal pages. Duplicate this file for <strong>Privacy Policy</strong> and <strong>Terms of Use</strong>,
+          then replace the headings, dates, and content blocks below.
+        </p>
+        <div class="hero-legal__meta">
+          <span>Last updated · May 5, 2026</span>
+          <span>Dosty Walks LLC</span>
+          <span>Baku, Azerbaijan</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="legal-shell">
+    <div class="legal-wrap legal-layout">
+      <article class="legal-card">
+        <section class="legal-section" id="intro">
+          <h2>Introduction</h2>
+          <p>
+            Use this section for the opening summary of the document. Explain which product or service the policy applies to,
+            who operates it, and when the text became effective.
+          </p>
+          <p>
+            For a Terms page, this block usually explains acceptance of the agreement. For a Privacy page, it introduces the scope
+            of data processing and the audience the policy covers.
+          </p>
+        </section>
+
+        <section class="legal-section" id="data">
+          <h2>Data We Collect</h2>
+          <p>
+            Describe the categories of information collected by the app and website. Split them into direct user input, account data,
+            device information, analytics, and support communication if needed.
+          </p>
+          <ul>
+            <li>Account and profile details</li>
+            <li>Usage events and in-app activity</li>
+            <li>Technical device information</li>
+            <li>Support and contact requests</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="usage">
+          <h2>How We Use It</h2>
+          <p>
+            Explain the operational purposes: running the product, improving features, sending service updates, ensuring security,
+            preventing abuse, complying with law, and measuring product performance.
+          </p>
+        </section>
+
+        <section class="legal-section" id="sharing">
+          <h2>Sharing And Disclosure</h2>
+          <p>
+            Use this section to explain whether information is shared with service providers, analytics vendors, payment tools,
+            hosting providers, or legal authorities when required.
+          </p>
+        </section>
+
+        <section class="legal-section" id="rights">
+          <h2>Your Rights</h2>
+          <p>
+            Add the user rights relevant to your jurisdiction: access, correction, deletion, objection, withdrawal of consent,
+            and complaint rights where applicable.
+          </p>
+        </section>
+
+        <section class="legal-section" id="contact">
+          <h2>Contact</h2>
+          <p>
+            Add the legal contact email, postal address, and company details here. This section can also contain your data
+            protection contact details if needed.
+          </p>
+          <div class="legal-note">
+            Recommended workflow: duplicate this file into `privacy-policy.html` and `terms-of-use.html`, then replace the heading,
+            meta line, sidebar links, and article content.
+          </div>
+        </section>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-title">Dosty<br><em>Walks.</em></div>
+        <p>Every step counts. Every month&nbsp;— 500&nbsp;kg of food to&nbsp;shelter.</p>
+        <div class="footer-social">
+          <button type="button" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </button>
+          <button type="button" aria-label="TikTok">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.66a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.09z"/></svg>
+          </button>
+          <button type="button" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#season">Seasons</a></li>
+          <li><a href="#impact">Impact</a></li>
+          <li><a href="#download">Download</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Partners</h5>
+        <ul>
+          <li><a href="#partners">Become a partner</a></li>
+          <li><button type="button">Press kit</button></li>
+          <li><button type="button">Contacts</button></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><button type="button">Privacy Policy</button></li>
+          <li><button type="button">Terms of Use</button></li>
+          <li><button type="button">Cookies</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Dosty Walks · Made in Baku 🇦🇿</span>
+      <span>Design draft v2 · work in&nbsp;progress</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const apiBase = window.location.origin;
+    const params = new URLSearchParams(window.location.search);
+    const lang = params.get('lang') === 'en' ? 'en' : 'az';
+    const type = params.get('type');
+    const slug = params.get('slug');
+    document.documentElement.lang = lang;
+
+    function text(section, key, fallback, items) {
+      const match = items.find((item) => item.section === section && item.key === key);
+      return match ? match.value : fallback;
+    }
+
+    function setText(selector, value, html = false) {
+      const node = document.querySelector(selector);
+      if (!node || !value) return;
+      if (html) node.innerHTML = escapeHtml(String(value)).replace(/\n/g, '<br>');
+      else node.textContent = value;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function renderUnavailable(title, message) {
+      document.title = title;
+      setText('.hero-legal h1', title);
+      setText('.hero-legal p', message);
+      const article = document.querySelector('.legal-card');
+      if (!article) return;
+
+      article.replaceChildren();
+      const section = document.createElement('section');
+      section.className = 'legal-section';
+
+      const heading = document.createElement('h2');
+      heading.textContent = title;
+      section.appendChild(heading);
+
+      const body = document.createElement('p');
+      body.textContent = message;
+      section.appendChild(body);
+
+      article.appendChild(section);
+    }
+
+    function normalizeLandingLinks() {
+      document.querySelectorAll('a[href*="Dosty Walks Landing v2.html#"]').forEach((link) => {
+        const href = link.getAttribute('href') || '';
+        const hashIndex = href.indexOf('#');
+        const hash = hashIndex >= 0 ? href.slice(hashIndex) : '';
+        link.setAttribute('href', `/${lang}${hash}`);
+      });
+    }
+
+    function replaceSocials(settings) {
+      const socials = [
+        settings['social.instagram'],
+        settings['social.facebook'],
+        settings['social.tiktok'],
+      ].filter(Boolean);
+      const buttons = Array.from(document.querySelectorAll('.footer-social button'));
+      buttons.forEach((button, index) => {
+        const cfg = socials[index];
+        if (!cfg || !cfg.enabled || !cfg.url) {
+          button.style.display = 'none';
+          return;
+        }
+        button.onclick = () => {
+          window.open(String(cfg.url), '_blank', 'noopener,noreferrer');
+        };
+      });
+    }
+
+    function updateLanguageButtons(currentPage) {
+      document.querySelectorAll('.lang button, .nav__panel-lang button').forEach((button) => {
+        const code = (button.textContent || '').trim().toLowerCase();
+        const isAz = code === 'az';
+        const isEn = code === 'en';
+        button.classList.toggle('active', (isAz && lang === 'az') || (isEn && lang === 'en'));
+        button.onclick = () => {
+          const nextLang = isEn ? 'en' : 'az';
+          const query = currentPage.type
+            ? `type=${encodeURIComponent(currentPage.type)}`
+            : `slug=${encodeURIComponent(currentPage.slug)}`;
+          window.location.href = `/legal-template.html?lang=${nextLang}&${query}`;
+        };
+      });
+    }
+
+    function bindBurger() {
+      const burger = document.getElementById('navBurger');
+      const panel = document.getElementById('navPanel');
+      if (!burger || !panel) return;
+
+      function toggle(open) {
+        const willOpen = open !== undefined ? open : !panel.classList.contains('is-open');
+        panel.classList.toggle('is-open', willOpen);
+        burger.classList.toggle('is-open', willOpen);
+        burger.setAttribute('aria-expanded', String(willOpen));
+        panel.setAttribute('aria-hidden', String(!willOpen));
+      }
+
+      burger.onclick = () => toggle();
+      panel.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') toggle(false);
+      });
+    }
+
+    function renderLegalContent(page) {
+      document.title = page.title || 'Legal';
+      setText('.hero-legal h1', page.title || 'Legal');
+
+      const summary = String(page.content || '').split('\n').map((line) => line.trim()).filter(Boolean);
+      if (summary[0]) {
+        setText('.hero-legal p', summary[0]);
+      }
+
+      const article = document.querySelector('.legal-card');
+      if (!article) return;
+
+      const blocks = String(page.content || '')
+        .split(/\n\s*\n/)
+        .map((part) => part.trim())
+        .filter(Boolean);
+      article.replaceChildren();
+
+      blocks.forEach((block) => {
+        const lines = block.split('\n').map((line) => line.trim()).filter(Boolean);
+        const [first, ...rest] = lines;
+        const isStructuredHeading = /^\d+(?:\.\d+)?[\.\s]/.test(first);
+        const section = document.createElement('section');
+        section.className = 'legal-section';
+
+        if (!rest.length) {
+          const paragraph = document.createElement('p');
+          paragraph.textContent = first;
+          section.appendChild(paragraph);
+          article.appendChild(section);
+          return;
+        }
+
+        if (isStructuredHeading) {
+          const heading = document.createElement('h2');
+          heading.textContent = first;
+          section.appendChild(heading);
+          rest.forEach((line) => {
+            const paragraph = document.createElement('p');
+            paragraph.textContent = line;
+            section.appendChild(paragraph);
+          });
+          article.appendChild(section);
+          return;
+        }
+
+        lines.forEach((line) => {
+          const paragraph = document.createElement('p');
+          paragraph.textContent = line;
+          section.appendChild(paragraph);
+        });
+        article.appendChild(section);
+      });
+    }
+
+    function renderContactContent(page) {
+      document.title = page.title || 'Contact';
+      setText('.hero-legal h1', page.title || 'Contact');
+
+      const lines = String(page.content || '').split('\n').map((line) => line.trim()).filter(Boolean);
+      if (lines[0]) {
+        setText('.hero-legal p', lines[0]);
+      }
+
+      const article = document.querySelector('.legal-card');
+      if (!article) return;
+
+      const introLines = lines.slice(1);
+      const dict = lang === 'az'
+        ? {
+            eyebrow: 'Əlaqə forması',
+            name: 'Ad və soyad',
+            email: 'E-poçt',
+            phone: 'Telefon',
+            subject: 'Mövzu',
+            message: 'Mesaj',
+            submit: 'Göndər',
+            sending: 'Göndərilir ...',
+            success: 'Mesaj göndərildi.',
+            failure: 'Mesaj göndərilmədi. Bir daha cəhd edin.',
+            fallback: 'Əlaqə, tərəfdaşlıq və media sorğuları üçün aşağıdakı formanı doldurun.',
+          }
+        : {
+            eyebrow: 'Contact form',
+            name: 'Full name',
+            email: 'Email',
+            phone: 'Phone',
+            subject: 'Subject',
+            message: 'Message',
+            submit: 'Send message',
+            sending: 'Sending ...',
+            success: 'Message sent.',
+            failure: 'Message failed to send. Please try again.',
+            fallback: 'Use the form below for contact, partnerships, or media requests.',
+          };
+
+      article.replaceChildren();
+      const section = document.createElement('section');
+      section.className = 'legal-section';
+
+      const eyebrow = document.createElement('span');
+      eyebrow.className = 'eyebrow';
+      eyebrow.textContent = dict.eyebrow;
+      section.appendChild(eyebrow);
+
+      const intro = document.createElement('div');
+      intro.className = 'contact-form__intro';
+      (introLines.length ? introLines : [dict.fallback]).forEach((line) => {
+        const paragraph = document.createElement('p');
+        paragraph.textContent = line;
+        intro.appendChild(paragraph);
+      });
+      section.appendChild(intro);
+
+      const formNode = document.createElement('form');
+      formNode.className = 'contact-form';
+      formNode.id = 'contactForm';
+
+      const grid = document.createElement('div');
+      grid.className = 'contact-form__grid';
+
+      [
+        ['contactName', 'name', 'text', dict.name, false],
+        ['contactEmail', 'email', 'email', dict.email, false],
+        ['contactPhone', 'phone', 'text', dict.phone, false],
+        ['contactSubject', 'subject', 'text', dict.subject, false],
+      ].forEach(([id, name, typeValue, labelText]) => {
+        const field = document.createElement('div');
+        field.className = 'contact-form__field';
+        const label = document.createElement('label');
+        label.htmlFor = id;
+        label.textContent = String(labelText);
+        const input = document.createElement('input');
+        input.id = id;
+        input.name = String(name);
+        input.type = String(typeValue);
+        if (name === 'name' || name === 'email') {
+          input.required = true;
+        }
+        field.appendChild(label);
+        field.appendChild(input);
+        grid.appendChild(field);
+      });
+
+      const messageField = document.createElement('div');
+      messageField.className = 'contact-form__field contact-form__field--full';
+      const messageLabel = document.createElement('label');
+      messageLabel.htmlFor = 'contactMessage';
+      messageLabel.textContent = dict.message;
+      const textarea = document.createElement('textarea');
+      textarea.id = 'contactMessage';
+      textarea.name = 'message';
+      textarea.required = true;
+      messageField.appendChild(messageLabel);
+      messageField.appendChild(textarea);
+      grid.appendChild(messageField);
+      formNode.appendChild(grid);
+
+      const actions = document.createElement('div');
+      actions.className = 'contact-form__actions';
+      const submitButton = document.createElement('button');
+      submitButton.type = 'submit';
+      submitButton.className = 'btn btn--yellow';
+      submitButton.id = 'contactSubmit';
+      submitButton.textContent = dict.submit;
+      const statusNode = document.createElement('span');
+      statusNode.className = 'contact-form__status';
+      statusNode.id = 'contactStatus';
+      actions.appendChild(submitButton);
+      actions.appendChild(statusNode);
+      formNode.appendChild(actions);
+      section.appendChild(formNode);
+      article.appendChild(section);
+
+      const form = document.getElementById('contactForm');
+      const submit = document.getElementById('contactSubmit');
+      const status = document.getElementById('contactStatus');
+      if (!form || !submit || !status) return;
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        status.textContent = dict.sending;
+        status.className = 'contact-form__status';
+        submit.setAttribute('disabled', 'disabled');
+
+        try {
+          const formData = new FormData(form);
+          const payload = {
+            name: String(formData.get('name') || '').trim(),
+            email: String(formData.get('email') || '').trim(),
+            phone: String(formData.get('phone') || '').trim(),
+            subject: String(formData.get('subject') || '').trim(),
+            message: String(formData.get('message') || '').trim(),
+            lang,
+          };
+
+          const response = await fetch(`${apiBase}/api/contact`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+            body: JSON.stringify(payload),
+          });
+
+          if (!response.ok) {
+            const text = await response.text();
+            throw new Error(text || dict.failure);
+          }
+
+          form.reset();
+          status.textContent = dict.success;
+          status.className = 'contact-form__status is-success';
+        } catch (error) {
+          status.textContent = error instanceof Error && error.message ? error.message : dict.failure;
+          status.className = 'contact-form__status is-error';
+        } finally {
+          submit.removeAttribute('disabled');
+        }
+      });
+    }
+
+    Promise.all([
+      fetch(`${apiBase}/api/public/settings`).then((r) => r.json()).catch(() => ({})),
+      fetch(`${apiBase}/api/public/translations?lang=${lang}`).then((r) => r.json()).catch(() => ([])),
+      fetch(`${apiBase}/api/public/pages/privacy?lang=${lang}`).then((r) => r.json()).catch(() => null),
+      fetch(`${apiBase}/api/public/pages/terms?lang=${lang}`).then((r) => r.json()).catch(() => null),
+      fetch(`${apiBase}/api/public/pages/contact?lang=${lang}`).then((r) => r.json()).catch(() => null),
+      slug
+        ? fetch(`${apiBase}/api/public/pages-by-slug/${encodeURIComponent(slug)}?lang=${lang}`).then((r) => r.json()).catch(() => null)
+        : Promise.resolve(null),
+    ]).then(([settings, translations, privacy, terms, contact, pageBySlug]) => {
+      normalizeLandingLinks();
+      replaceSocials(settings || {});
+
+      const currentPage = pageBySlug || (type === 'terms' ? terms : type === 'contact' ? contact : privacy);
+      const currentType = pageBySlug ? null : (type === 'terms' ? 'terms' : type === 'contact' ? 'contact' : 'privacy');
+      const currentSlug = currentPage?.slug || slug || (type === 'terms' ? 'terms-of-use' : type === 'contact' ? 'contact' : 'privacy-policy');
+
+      const navValues = [
+        text('nav', 'how', 'How it works', translations),
+        text('nav', 'season', 'Seasons', translations),
+        text('nav', 'shelter', 'Shelter', translations),
+        text('nav', 'download', 'Download', translations),
+      ];
+      document.querySelectorAll('.nav__links a').forEach((link, index) => {
+        if (navValues[index]) link.textContent = navValues[index];
+      });
+      document.querySelectorAll('.nav__panel-links a').forEach((link, index) => {
+        if (navValues[index]) link.textContent = navValues[index];
+      });
+      document.querySelectorAll('[data-shelter-link]').forEach((link) => {
+        link.setAttribute('href', `/${lang}/shelter`);
+      });
+
+      setText('.nav__right .btn', text('hero', 'primaryCta', 'Get App', translations));
+      setText('.nav__panel-cta .btn--yellow', text('hero', 'primaryCta', 'Get App', translations));
+      setText('.nav__panel-cta .btn--ghost-dark', text('partners', 'ctaSecondary', 'Contact', translations));
+      setText('.hero-legal .eyebrow', currentType === 'contact' ? text('footer', 'contacts', 'Contacts', translations) : text('footer', 'legalTitle', 'Legal', translations));
+
+      const meta = document.querySelector('.hero-legal__meta');
+      if (meta) {
+        meta.remove();
+      }
+
+      setText('.footer-brand p', text('footer', 'tagline', document.querySelector('.footer-brand p')?.textContent || '', translations));
+      const footerHeads = document.querySelectorAll('.footer-col h5');
+      if (footerHeads[0]) footerHeads[0].textContent = text('footer', 'productTitle', 'Product', translations);
+      if (footerHeads[1]) footerHeads[1].textContent = text('footer', 'partnersTitle', 'Partners', translations);
+      if (footerHeads[2]) footerHeads[2].textContent = text('footer', 'legalTitle', 'Legal', translations);
+
+      const footerGroups = document.querySelectorAll('.footer-col ul');
+      if (footerGroups[0]) {
+        const links = footerGroups[0].querySelectorAll('a');
+        if (links[0]) links[0].textContent = text('nav', 'how', 'How it works', translations);
+        if (links[1]) links[1].textContent = text('nav', 'season', 'Season', translations);
+        if (links[2]) links[2].textContent = text('nav', 'impact', 'Impact', translations);
+        if (links[3]) links[3].textContent = text('nav', 'download', 'Download', translations);
+      }
+      if (footerGroups[1]) {
+        const nodes = footerGroups[1].querySelectorAll('button, a');
+        if (nodes[0]) nodes[0].textContent = text('footer', 'becomePartner', nodes[0].textContent || 'Become a partner', translations);
+        if (nodes[1]) nodes[1].textContent = text('footer', 'pressKit', nodes[1].textContent || 'Press kit', translations);
+        if (nodes[2]) nodes[2].textContent = text('footer', 'contacts', nodes[2].textContent || 'Contacts', translations);
+        if (nodes[2]) nodes[2].onclick = () => { window.location.href = `/${lang}/contact`; };
+      }
+      if (footerGroups[2]) {
+        const buttons = footerGroups[2].querySelectorAll('button');
+        if (buttons[0]) buttons[0].textContent = privacy?.title || 'Privacy Policy';
+        if (buttons[1]) buttons[1].textContent = terms?.title || 'Terms of Use';
+        if (buttons[2]) buttons[2].textContent = text('footer', 'cookies', buttons[2].textContent || 'Cookies', translations);
+        if (buttons[0] && privacy?.slug) buttons[0].onclick = () => { window.location.href = `/legal-template.html?lang=${lang}&slug=${encodeURIComponent(privacy.slug)}`; };
+        if (buttons[1] && terms?.slug) buttons[1].onclick = () => { window.location.href = `/legal-template.html?lang=${lang}&slug=${encodeURIComponent(terms.slug)}`; };
+      }
+
+      const footerBottom = document.querySelectorAll('.footer-bottom span');
+      if (footerBottom[0]) footerBottom[0].textContent = text('footer', 'bottomLeft', footerBottom[0].textContent || '', translations);
+      if (footerBottom[1]) footerBottom[1].textContent = text('footer', 'bottomRight', footerBottom[1].textContent || '', translations);
+
+      if (currentPage) {
+        if (currentType === 'contact' || currentPage.type === 'contact') renderContactContent(currentPage);
+        else renderLegalContent(currentPage);
+      } else {
+        renderUnavailable(
+          currentType === 'contact' ? 'Contact unavailable' : 'Page unavailable',
+          lang === 'az'
+            ? 'Səhifə məzmunu hazırda yüklənmir. Zəhmət olmasa bir qədər sonra yenidən yoxlayın.'
+            : 'This page content is temporarily unavailable. Please try again later.',
+        );
+      }
+      updateLanguageButtons({ type: currentType, slug: currentSlug });
+      bindBurger();
+    });
+  })();
+</script>
+</body>
+</html>

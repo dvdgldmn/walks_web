@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         String   @default("superadmin")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Translation {
+  id        String   @id @default(cuid())
+  section   String
+  key       String
+  az        String   @db.Text
+  en        String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([section, key])
+  @@index([section])
+}
+
+model MediaAsset {
+  id           String   @id @default(cuid())
+  section      String
+  slot         String
+  kind         String
+  fileName     String
+  originalName String
+  mimeType     String
+  filePath     String
+  altAz        String?  @db.Text
+  altEn        String?  @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([section, slot])
+  @@index([section])
+}
+
+model Page {
+  id                String   @id @default(cuid())
+  type              String   @unique
+  titleAz           String
+  titleEn           String
+  slug              String   @unique
+  contentAz         String   @db.Text
+  contentEn         String   @db.Text
+  seoTitleAz        String?  @db.Text
+  seoTitleEn        String?  @db.Text
+  seoDescriptionAz  String?  @db.Text
+  seoDescriptionEn  String?  @db.Text
+  published         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model ShelterAnimal {
+  id               String   @id @default(cuid())
+  pageType         String   @default("shelter")
+  nameAz           String
+  nameEn           String
+  eyebrowAz        String?  @db.Text
+  eyebrowEn        String?  @db.Text
+  altAz            String?  @db.Text
+  altEn            String?  @db.Text
+  thumbLabelAz     String?  @db.Text
+  thumbLabelEn     String?  @db.Text
+  genderLabelAz    String?  @db.Text
+  genderLabelEn    String?  @db.Text
+  genderValueAz    String?  @db.Text
+  genderValueEn    String?  @db.Text
+  birthLabelAz     String?  @db.Text
+  birthLabelEn     String?  @db.Text
+  birthValueAz     String?  @db.Text
+  birthValueEn     String?  @db.Text
+  breedLabelAz     String?  @db.Text
+  breedLabelEn     String?  @db.Text
+  breedValueAz     String?  @db.Text
+  breedValueEn     String?  @db.Text
+  colorLabelAz     String?  @db.Text
+  colorLabelEn     String?  @db.Text
+  colorValueAz     String?  @db.Text
+  colorValueEn     String?  @db.Text
+  storyAz          String   @db.Text
+  storyEn          String   @db.Text
+  imagePath        String
+  imageFileName    String
+  imageOriginalName String
+  imageMimeType    String
+  sortOrder        Int      @default(0)
+  published        Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([pageType, sortOrder])
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

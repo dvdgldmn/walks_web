@@ -1,0 +1,74 @@
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale=C.UTF-8
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+
+  migrate:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    env_file:
+      - .env.production
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
+    depends_on:
+      - postgres
+    command: ["npx", "prisma", "migrate", "deploy", "--schema", "apps/api/prisma/schema.prisma"]
+    restart: "no"
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
+    depends_on:
+      postgres:
+        condition: service_started
+      migrate:
+        condition: service_completed_successfully
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./uploads:/app/uploads
+
+  admin:
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    environment:
+      INTERNAL_API_URL: http://api:4000
+    depends_on:
+      - api
+    ports:
+      - "3001:3001"
+
+  website:
+    build:
+      context: .
+      dockerfile: apps/website/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    environment:
+      INTERNAL_API_URL: http://api:4000
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_prod_data:
