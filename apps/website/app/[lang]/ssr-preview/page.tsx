@@ -1,23 +1,33 @@
 import { notFound } from 'next/navigation';
-import { getTranslations, Lang } from '../../lib/content';
+import { getMedia, getTranslations, Lang } from '../../lib/content';
+import { LandingMarquee } from '../components/landing/marquee';
 import { LandingHow } from '../components/landing/how';
+import { LandingSeason } from '../components/landing/season';
+import { LandingFinalCta } from '../components/landing/final-cta';
 import '../landing.css';
 
 type Props = { params: Promise<{ lang: Lang }> };
 
 // Phase 2 work-in-progress: SSR rebuild of the landing for 1:1 comparison vs the
 // template landing at /[lang]. Removed at the Phase 4 flip.
+// Hero + competition (§03) are interactive and land in Phase 3.
 export default async function SsrPreviewPage({ params }: Props) {
   const { lang } = await params;
   if (lang !== 'az' && lang !== 'en') {
     notFound();
   }
 
-  const translations = await getTranslations(lang).catch(() => []);
+  const [translations, media] = await Promise.all([
+    getTranslations(lang).catch(() => []),
+    getMedia().catch(() => []),
+  ]);
 
   return (
     <main className="landing">
+      <LandingMarquee translations={translations} />
       <LandingHow translations={translations} />
+      <LandingSeason translations={translations} media={media} />
+      <LandingFinalCta translations={translations} media={media} />
     </main>
   );
 }
