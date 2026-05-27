@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getMedia, getTranslations, Lang } from '../../lib/content';
+import { LandingHero } from '../components/landing/hero';
 import { LandingMarquee } from '../components/landing/marquee';
 import { LandingHow } from '../components/landing/how';
 import { LandingSeason } from '../components/landing/season';
@@ -24,6 +25,7 @@ export default async function SsrPreviewPage({ params }: Props) {
 
   return (
     <main className="landing">
+      <LandingHero lang={lang} translations={translations} />
       <LandingMarquee translations={translations} />
       <LandingHow translations={translations} />
       <LandingSeason translations={translations} media={media} />
