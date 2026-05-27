@@ -48,9 +48,15 @@ links (onelink, `/[lang]/contact`, store URLs) baked at render time.
 - **Phase 0 — CSS extraction.** Move the landing's inline `<style>` into a scoped
   `landing.module.css` (or a co-located stylesheet). Pure move, no visual change. Lets us
   drop inline styles and shrink the template. *Checkpoint: pixel-identical.*
-- **Phase 1 — Shared chrome.** Build a single `SiteNav` (merging landing nav + the
-  burger/scroll behaviour) and reuse `SiteFooter` on the landing. *Checkpoint: nav+footer
-  identical on landing and secondary pages, one source of truth.*
+- **Phase 1 — Shared chrome.** The top nav is duplicated exactly like the footer: the
+  landing has its own inline `<nav id="nav">` (markup + styles + JS) in the template, while
+  secondary pages use the React `SecondaryNav`. Build **one** `SiteNav` used by both, with a
+  `variant` prop:
+  - `landing` — scroll-based background switch (transparent/yellow over the hero →
+    solid white/dark after), in-page anchor links, burger panel, lang switch.
+  - `solid` — always-solid bar (current secondary behaviour).
+  Also reuse `SiteFooter` on the landing. *Checkpoint: nav + footer identical on landing and
+  secondary pages at az/en + mobile, with one source of truth each.*
 - **Phase 2 — Static sections to RSC.** Port hero, how, season, impact, tracker, pricing,
   partners, final-CTA as server components reading CMS. *Checkpoint: each section matches
   current at az/en, desktop+mobile.*
