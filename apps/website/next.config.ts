@@ -2,19 +2,20 @@ import type { NextConfig } from 'next';
 
 const internalApiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
-// The landing injects inline <style>/<script> and loads Lottie (cdnjs) + Google Fonts,
-// so script/style need 'unsafe-inline' and those external origins are whitelisted.
+// React landing + secondary pages. Inline scripts: Next hydration (kept 'unsafe-inline').
+// Inline styles: React style={} attributes (kept 'unsafe-inline'). External: Google Fonts only.
+// Lottie is now self-hosted via the lottie-web package, so cdnjs is no longer needed.
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
   "object-src 'none'",
-  "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com",
+  "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
   "img-src 'self' data: blob:",
-  "connect-src 'self' https://cdnjs.cloudflare.com",
+  "connect-src 'self'",
 ].join('; ');
 
 const securityHeaders = [
