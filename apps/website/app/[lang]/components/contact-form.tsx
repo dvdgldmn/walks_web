@@ -82,23 +82,57 @@ export function ContactForm({
         <div className={styles.contactGrid}>
           <div className={styles.field}>
             <label htmlFor="contactName">{dictionary.name}</label>
-            <input id="contactName" name="name" required type="text" />
+            <input
+              id="contactName"
+              name="name"
+              required
+              type="text"
+              maxLength={120}
+              autoComplete="name"
+            />
           </div>
           <div className={styles.field}>
             <label htmlFor="contactEmail">{dictionary.email}</label>
-            <input id="contactEmail" name="email" required type="email" />
+            <input
+              id="contactEmail"
+              name="email"
+              required
+              type="email"
+              maxLength={160}
+              autoComplete="email"
+            />
           </div>
           <div className={styles.field}>
             <label htmlFor="contactPhone">{dictionary.phone}</label>
-            <input id="contactPhone" name="phone" type="text" />
+            <input
+              id="contactPhone"
+              name="phone"
+              type="tel"
+              maxLength={40}
+              autoComplete="tel"
+              inputMode="tel"
+            />
           </div>
           <div className={styles.field}>
             <label htmlFor="contactSubject">{dictionary.subject}</label>
-            <input id="contactSubject" name="subject" type="text" />
+            <input
+              id="contactSubject"
+              name="subject"
+              type="text"
+              maxLength={160}
+              autoComplete="off"
+            />
           </div>
           <div className={styles.fieldFull}>
             <label htmlFor="contactMessage">{dictionary.message}</label>
-            <textarea id="contactMessage" name="message" required />
+            <textarea
+              id="contactMessage"
+              name="message"
+              required
+              minLength={10}
+              maxLength={5000}
+              autoComplete="off"
+            />
           </div>
         </div>
         <div className={styles.contactActions}>
