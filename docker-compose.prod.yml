@@ -44,7 +44,7 @@ services:
       migrate:
         condition: service_completed_successfully
     ports:
-      - "4000:4000"
+      - "127.0.0.1:${API_HOST_PORT:-4000}:4000"
     volumes:
       - ./uploads:/app/uploads
 
@@ -60,7 +60,7 @@ services:
     depends_on:
       - api
     ports:
-      - "3001:3001"
+      - "127.0.0.1:${ADMIN_HOST_PORT:-3001}:3001"
 
   website:
     build:
@@ -74,7 +74,7 @@ services:
     depends_on:
       - api
     ports:
-      - "3000:3000"
+      - "127.0.0.1:${WEBSITE_HOST_PORT:-3000}:3000"
 
 volumes:
   postgres_prod_data:
