@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import styles from './secondary-shell.module.css';
+import { SiteNavLanding } from './site-nav-landing';
 
 type NavLink = {
   label: string;
@@ -29,9 +30,22 @@ export function SiteNav({
   rulesLabel,
   shelterLabel,
   getAppLabel,
+  variant = 'solid',
 }: SiteNavProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+
+  if (variant === 'landing') {
+    return (
+      <SiteNavLanding
+        getAppLabel={getAppLabel}
+        lang={lang}
+        links={links}
+        rulesLabel={rulesLabel}
+        shelterLabel={shelterLabel}
+      />
+    );
+  }
 
   const buildLangHref = (targetLang: 'az' | 'en') => {
     const cleanPath = pathname || `/${lang}`;
