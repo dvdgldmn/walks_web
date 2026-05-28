@@ -32,12 +32,13 @@ export function ContactForm({
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
     setSubmitting(true);
     setStatus(dictionary.sending);
     setStatusKind('idle');
 
     try {
-      const formData = new FormData(event.currentTarget);
+      const formData = new FormData(form);
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -58,7 +59,7 @@ export function ContactForm({
         throw new Error(text || dictionary.failure);
       }
 
-      event.currentTarget.reset();
+      form.reset();
       setStatus(dictionary.success);
       setStatusKind('success');
     } catch (error) {
