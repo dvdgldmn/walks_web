@@ -15,6 +15,13 @@
   --display-font: 'Truculenta', 'Arial Narrow', sans-serif;
 }
 
+@media (max-width: 560px) {
+  :root { --gutter: 18px; }
+}
+@media (max-width: 380px) {
+  :root { --gutter: 14px; }
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 html, body { margin: 0; padding: 0; overflow-x: clip; }
