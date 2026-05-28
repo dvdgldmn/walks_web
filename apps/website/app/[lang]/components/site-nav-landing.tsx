@@ -93,10 +93,10 @@ export function SiteNavLanding({
       style={transparent ? undefined : SOLID_STYLE}
     >
       <div className="wrap nav__inner">
-        <a href="#top" className="nav__brand">
+        <Link href={`/${lang}`} className="nav__brand">
           <img src="/assets/brand/mascot-thumb-up.png" alt="" />
           <span className="nav__brand-text">Dosty Walks</span>
-        </a>
+        </Link>
         <div className="nav__links">{renderLinks()}</div>
         <div className="nav__right">
           <div className="lang">
