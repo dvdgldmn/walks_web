@@ -16,6 +16,9 @@ tmp-*.txt
 
 # backups (DB dumps + uploads archives)
 backups/
+
+# local deployment notes with secrets (never commit)
+/DEPLOY.md
 uploads/*
 !uploads/.gitkeep
 !uploads/logos/.gitkeep
