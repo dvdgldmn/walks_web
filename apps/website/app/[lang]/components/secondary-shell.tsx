@@ -7,7 +7,7 @@ import {
   pickTranslation,
 } from '../../lib/content';
 import { SiteFooter } from './site-footer';
-import { SecondaryNav } from './secondary-nav';
+import { SiteNav } from './site-nav';
 import styles from './secondary-shell.module.css';
 
 type SecondaryShellProps = {
@@ -51,12 +51,13 @@ export function SecondaryShell({
 
   return (
     <div className={styles.page}>
-      <SecondaryNav
+      <SiteNav
         getAppLabel={getAppLabel}
         lang={lang}
         links={navLinks}
         rulesLabel={rulesLabel}
         shelterLabel={shelterLabel}
+        variant="solid"
       />
 
       <main>
