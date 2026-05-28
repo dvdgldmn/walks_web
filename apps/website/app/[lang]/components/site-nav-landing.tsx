@@ -11,18 +11,36 @@ type Props = {
   rulesLabel: string;
   shelterLabel: string;
   getAppLabel: string;
+  // When false (secondary pages): no scroll effect, always solid white. When true (landing
+  // with a hero behind): transparent over #top, solid after scrolling past it.
+  transparent?: boolean;
 };
 
 const GET_APP_URL = 'https://walks.onelink.me/JjqT/9mczp2y4';
+const SOLID_STYLE: React.CSSProperties = {
+  background: 'rgba(255,255,255,0.92)',
+  backdropFilter: 'blur(14px)',
+  WebkitBackdropFilter: 'blur(14px)',
+  borderBottom: '1px solid var(--hairline)',
+};
 
-// Landing variant of the shared nav: uses the landing.css classes (1:1 with the original
-// landing nav) and reproduces the template's scroll-based transparent/solid behaviour.
-export function SiteNavLanding({ lang, links, rulesLabel, shelterLabel, getAppLabel }: Props) {
+// Shared site nav rendered with landing.css classes (one source of truth for both the
+// landing and secondary pages). `transparent=true` runs the landing scroll behaviour.
+export function SiteNavLanding({
+  lang,
+  links,
+  rulesLabel,
+  shelterLabel,
+  getAppLabel,
+  transparent = true,
+}: Props) {
   const navRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
 
   // Transparent over the hero (#top), solid after — mirrors the template's updateNav().
+  // Skipped when transparent=false (secondary pages don't have the hero behind the nav).
   useEffect(() => {
+    if (!transparent) return;
     const nav = navRef.current;
     const hero = document.getElementById('top');
     if (!nav) return;
@@ -45,7 +63,7 @@ export function SiteNavLanding({ lang, links, rulesLabel, shelterLabel, getAppLa
     window.addEventListener('scroll', update, { passive: true });
     update();
     return () => window.removeEventListener('scroll', update);
-  }, []);
+  }, [transparent]);
 
   const go = (target: 'az' | 'en') => {
     window.location.href = `/${target}`;
@@ -68,7 +86,12 @@ export function SiteNavLanding({ lang, links, rulesLabel, shelterLabel, getAppLa
   );
 
   return (
-    <nav className="nav on-yellow" id="nav" ref={navRef}>
+    <nav
+      className={`nav${transparent ? ' on-yellow' : ''}`}
+      id="nav"
+      ref={navRef}
+      style={transparent ? undefined : SOLID_STYLE}
+    >
       <div className="wrap nav__inner">
         <a href="#top" className="nav__brand">
           <img src="/assets/brand/mascot-thumb-up.png" alt="" />

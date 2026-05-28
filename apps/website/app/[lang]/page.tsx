@@ -17,7 +17,6 @@ import { LandingFinalCta } from './components/landing/final-cta';
 import { SiteFooter } from './components/site-footer';
 import { SiteNav } from './components/site-nav';
 import secondaryStyles from './components/secondary-shell.module.css';
-import './landing.css';
 
 type LangPageProps = {
   params: Promise<{
