@@ -99,7 +99,10 @@ export function getMediaUrl(filePath?: string | null) {
     return null;
   }
 
-  return `${API_URL}/uploads/${filePath}`;
+  // Return a same-origin URL. The reverse proxy (nginx) and Next.js dev rewrites
+  // both serve /uploads/* from the api container, so the browser never sees the
+  // internal `http://api:4000` hostname (which would also be CSP-blocked).
+  return `/uploads/${filePath}`;
 }
 
 export function pickTranslation(
