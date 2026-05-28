@@ -19,6 +19,7 @@ backups/
 
 # local deployment notes with secrets (never commit)
 /DEPLOY.md
+/info.txt
 uploads/*
 !uploads/.gitkeep
 !uploads/logos/.gitkeep
