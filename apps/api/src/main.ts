@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { static as serveStatic } from 'express';
 import helmet from 'helmet';
 import { existsSync, mkdirSync } from 'node:fs';
@@ -9,7 +10,11 @@ import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  // We sit behind nginx (and docker-proxy) on prod. Trust X-Forwarded-For so req.ip /
+  // throttler keying reflect the real visitor instead of the loopback / docker-bridge
+  // address shared by every guest.
+  app.set('trust proxy', 'loopback, linklocal, uniquelocal');
   const config = app.get(ConfigService);
   const port = config.get<number>('API_PORT', 4000);
   const uploadsDir = resolve(
