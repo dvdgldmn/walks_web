@@ -1,8 +1,22 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { notFound } from 'next/navigation';
-import { getSiteSettings, Lang } from '../lib/content';
-import { getLandingTemplateParts } from './landing-template';
+import {
+  getMedia,
+  getPublicPage,
+  getSiteSettings,
+  getTranslations,
+  Lang,
+  pickTranslation,
+} from '../lib/content';
+import { LandingHero } from './components/landing/hero';
+import { LandingMarquee } from './components/landing/marquee';
+import { LandingHow } from './components/landing/how';
+import { LandingCompetition } from './components/landing/competition';
+import { LandingSeason } from './components/landing/season';
+import { LandingFinalCta } from './components/landing/final-cta';
+import { SiteFooter } from './components/site-footer';
+import { SiteNav } from './components/site-nav';
+import secondaryStyles from './components/secondary-shell.module.css';
 import './landing.css';
 
 type LangPageProps = {
@@ -42,7 +56,22 @@ export default async function LangHomePage({ params }: LangPageProps) {
     notFound();
   }
 
-  const template = getLandingTemplateParts();
+  const [translations, media, settings, privacy, terms, faq] = await Promise.all([
+    getTranslations(lang).catch(() => []),
+    getMedia().catch(() => []),
+    getSiteSettings().catch(() => null),
+    getPublicPage('privacy', lang).catch(() => null),
+    getPublicPage('terms', lang).catch(() => null),
+    getPublicPage('faq', lang).catch(() => null),
+  ]);
+
+  const shelterLabel = pickTranslation(translations, 'nav', 'shelter', 'Shelter');
+  const navLinks = [
+    { label: pickTranslation(translations, 'nav', 'how', 'How it works'), href: '#how' },
+    { label: pickTranslation(translations, 'nav', 'season', 'Seasons'), href: '#season' },
+    { label: pickTranslation(translations, 'nav', 'download', 'Download'), href: '#download' },
+  ];
+  const getAppLabel = pickTranslation(translations, 'hero', 'primaryCta', 'Get App');
 
   return (
     <>
@@ -52,23 +81,30 @@ export default async function LangHomePage({ params }: LangPageProps) {
         href="https://fonts.googleapis.com/css2?family=Truculenta:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
       />
-      <div dangerouslySetInnerHTML={{ __html: template.markup }} />
-      <Script id="landing-lang" strategy="beforeInteractive">
-        {`window.__LANDING_LANG__ = ${JSON.stringify(lang)};`}
-      </Script>
-      <Script
-        src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"
-        strategy="beforeInteractive"
-      />
-      {template.scripts.map((script, index) => (
-        <Script
-          id={`landing-runtime-${index + 1}`}
-          key={`landing-runtime-${index + 1}`}
-          strategy="afterInteractive"
-        >
-          {script}
-        </Script>
-      ))}
+      <main className="landing">
+        <SiteNav
+          getAppLabel={getAppLabel}
+          lang={lang}
+          links={navLinks}
+          rulesLabel={pickTranslation(translations, 'nav', 'rules', 'Rules')}
+          shelterLabel={shelterLabel}
+          variant="landing"
+        />
+        <LandingHero lang={lang} translations={translations} />
+        <LandingMarquee translations={translations} />
+        <LandingHow translations={translations} />
+        <LandingCompetition translations={translations} media={media} />
+        <LandingSeason translations={translations} media={media} />
+        <LandingFinalCta translations={translations} media={media} />
+        <SiteFooter
+          lang={lang}
+          pages={{ privacy, terms, faq }}
+          settings={settings}
+          shelterLabel={shelterLabel}
+          styles={secondaryStyles}
+          translations={translations}
+        />
+      </main>
     </>
   );
 }
