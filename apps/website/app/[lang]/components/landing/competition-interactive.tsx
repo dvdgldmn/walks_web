@@ -172,35 +172,46 @@ export function CompetitionInteractive({ screens }: { screens: Screen[] }) {
         });
       });
 
-      if (track) {
-        track.addEventListener('pointerdown', (e) => {
+      const attachDrag = (el: HTMLElement) => {
+        el.addEventListener('pointerdown', (e) => {
           if (e.pointerType === 'mouse' && e.button !== 0) return;
           dragActive = true;
           dragStartX = e.clientX;
           dragStartTranslate = currentTranslate;
-          if (track.setPointerCapture) track.setPointerCapture(e.pointerId);
+          if (el.setPointerCapture) el.setPointerCapture(e.pointerId);
           e.preventDefault();
         });
-        track.addEventListener('pointermove', (e) => {
+        el.addEventListener('pointermove', (e) => {
           if (!dragActive) return;
           applyTrackPosition(dragStartTranslate + (e.clientX - dragStartX), true);
           e.preventDefault();
         });
-        const stopTrackDrag = (e: PointerEvent) => {
+        const stop = (e: PointerEvent) => {
           if (!dragActive) return;
           dragActive = false;
-          if (track.releasePointerCapture) {
+          if (el.releasePointerCapture) {
             try {
-              track.releasePointerCapture(e.pointerId);
+              el.releasePointerCapture(e.pointerId);
             } catch {
               /* noop */
             }
           }
           settleMobile(undefined, false);
         };
-        track.addEventListener('pointerup', stopTrackDrag);
-        track.addEventListener('pointercancel', stopTrackDrag);
-        track.addEventListener('pointerleave', stopTrackDrag);
+        el.addEventListener('pointerup', stop);
+        el.addEventListener('pointercancel', stop);
+        el.addEventListener('pointerleave', stop);
+      };
+
+      if (track) attachDrag(track);
+
+      // Make the phone block draggable too — same swipe as the cards above.
+      const phoneWrap = shadow.querySelector<HTMLElement>('.phone-wrap');
+      if (phoneWrap) {
+        phoneWrap.style.pointerEvents = 'auto';
+        phoneWrap.style.touchAction = 'none';
+        phoneWrap.style.cursor = 'grab';
+        attachDrag(phoneWrap);
       }
 
       activateMobile(0);
