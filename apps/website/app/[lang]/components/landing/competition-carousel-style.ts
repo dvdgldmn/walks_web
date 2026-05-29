@@ -1,2 +1,149 @@
-// Verbatim shadow-DOM styles for the §03 mobile carousel (extracted from landing-template.html).
-export const COMPETITION_CAROUSEL_CSS = "\r\n        :host { display:block; width:100%; }\r\n        * { box-sizing:border-box; }\r\n        .track-viewport {\r\n          overflow:hidden;\r\n          padding-top:6px;\r\n        }\r\n        .track {\r\n          display:flex;\r\n          gap:18px;\r\n          padding:0 max(32px, calc((100% - min(320px, calc(100vw - 48px))) / 2)) 4px;\r\n          margin:0 -32px;\r\n          will-change:transform;\r\n          transition:transform .35s cubic-bezier(.2,.7,.2,1);\r\n          user-select:none;\r\n          -webkit-user-select:none;\r\n          touch-action:none;\r\n          cursor:grab;\r\n        }\r\n        .track.is-dragging { transition:none; cursor:grabbing; }\r\n        .slide { flex:0 0 min(320px, calc(100vw - 48px)); }\r\n        .card {\r\n          min-height:248px;\r\n          padding:20px 20px 18px;\r\n          border-radius:28px;\r\n          background:rgba(255,255,255,.04);\r\n          display:flex;\r\n          flex-direction:column;\r\n          justify-content:flex-start;\r\n          opacity:.38;\r\n          transform:translateY(10px);\r\n          transition:opacity .28s ease, transform .28s ease, background .28s ease, box-shadow .28s ease;\r\n        }\r\n        .card.active {\r\n          opacity:1;\r\n          transform:translateY(0);\r\n          background:rgba(255,255,255,.1);\r\n          box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);\r\n        }\r\n        .eyebrow {\r\n          color:rgba(255,255,255,.42);\r\n          font-size:13px;\r\n          margin-bottom:18px;\r\n          font-family:Inter, system-ui, sans-serif;\r\n          font-weight:700;\r\n          text-transform:uppercase;\r\n          letter-spacing:.02em;\r\n        }\r\n        .card.active .eyebrow { color:rgba(255,255,255,.56); }\r\n        h3 {\r\n          font-family:var(--display-font), Impact, sans-serif;\r\n          font-size:clamp(44px, 12vw, 72px);\r\n          text-transform:uppercase;\r\n          line-height:.88;\r\n          letter-spacing:-1.2px;\r\n          margin:0 0 18px;\r\n          color:#fff;\r\n          font-weight:400;\r\n          max-width:6.8ch;\r\n        }\r\n        h3 em { font-style:normal; color:#F5C842; }\r\n        p {\r\n          font-size:15px;\r\n          line-height:1.48;\r\n          color:rgba(255,255,255,.46);\r\n          margin:0;\r\n          font-family:Inter, system-ui, sans-serif;\r\n          max-width:16.5rem;\r\n        }\r\n        .card.active p {\r\n          color:rgba(255,255,255,.68);\r\n        }\r\n        .dots {\r\n          display:flex;\r\n          justify-content:center;\r\n          align-items:center;\r\n          gap:8px;\r\n          margin:18px 0 0;\r\n          font-size:0;\r\n          line-height:0;\r\n          -webkit-tap-highlight-color:transparent;\r\n          user-select:none;\r\n          -webkit-user-select:none;\r\n        }\r\n        .dot {\r\n          width:8px;\r\n          height:8px;\r\n          border-radius:999px;\r\n          background:rgba(255,255,255,.12);\r\n          display:inline-block;\r\n          transition:background .25s, width .25s;\r\n          touch-action:none;\r\n        }\r\n        .dot.active { width:22px; background:#F5C842; }\r\n        .phone-wrap {\r\n          display:flex;\r\n          justify-content:center;\r\n          pointer-events:none;\r\n        }\r\n        .phone {\r\n          width:280px;\r\n          background:#0A0A0A;\r\n          border-radius:48px;\r\n          padding:12px;\r\n          box-shadow:\r\n            0 0 0 2px rgba(255,255,255,.04),\r\n            0 40px 80px -20px rgba(0,0,0,.7),\r\n            0 12px 28px -8px rgba(0,0,0,.5);\r\n        }\r\n        .screen {\r\n          display:block;\r\n          width:100%;\r\n          aspect-ratio:9 / 19.5;\r\n          object-fit:cover;\r\n          object-position:top center;\r\n          border-radius:38px;\r\n          transition:opacity .25s ease;\r\n        }\r\n        .screen.swap { opacity:0; }\r\n        @media (max-width:560px) {\r\n          .track {\r\n            padding:0 max(32px, calc((100% - min(320px, calc(100vw - 48px))) / 2)) 4px;\r\n            margin:0 -32px;\r\n          }\r\n          .phone { width:280px; }\r\n        }\r\n        @media (max-width:420px) {\r\n          .track { gap:14px; }\r\n          .slide { flex-basis:calc(100vw - 40px); max-width:calc(100vw - 40px); }\r\n          .card {\r\n            min-height:224px;\r\n            padding:18px 18px 16px;\r\n          }\r\n          .eyebrow {\r\n            font-size:12px;\r\n            margin-bottom:16px;\r\n          }\r\n          h3 {\r\n            font-size:clamp(38px, 11vw, 56px);\r\n            margin-bottom:16px;\r\n          }\r\n          p {\r\n            font-size:14px;\r\n            max-width:15.5rem;\r\n          }\r\n        }\r\n      ";
+// Shadow-DOM styles for the §03 mobile carousel.
+export const COMPETITION_CAROUSEL_CSS = `
+  :host { display:block; width:100%; }
+  * { box-sizing:border-box; }
+  .track-viewport {
+    overflow:hidden;
+    padding-top:6px;
+  }
+  .track {
+    display:flex;
+    gap:18px;
+    padding:0 max(32px, calc((100% - min(320px, calc(100vw - 48px))) / 2)) 4px;
+    margin:0 -32px;
+    will-change:transform;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1);
+    user-select:none;
+    -webkit-user-select:none;
+    touch-action:none;
+    cursor:grab;
+  }
+  .track.is-dragging { transition:none; cursor:grabbing; }
+  .slide { flex:0 0 min(320px, calc(100vw - 48px)); }
+  .card {
+    min-height:248px;
+    padding:20px 20px 18px;
+    border-radius:28px;
+    background:rgba(255,255,255,.04);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    opacity:.38;
+    transform:translateY(10px);
+    transition:opacity .28s ease, transform .28s ease, background .28s ease, box-shadow .28s ease;
+  }
+  .card.active {
+    opacity:1;
+    transform:translateY(0);
+    background:rgba(255,255,255,.1);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+  }
+  .eyebrow {
+    color:rgba(255,255,255,.42);
+    font-size:13px;
+    margin-bottom:18px;
+    font-family:Inter, system-ui, sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.02em;
+  }
+  .card.active .eyebrow { color:rgba(255,255,255,.56); }
+  h3 {
+    font-family:var(--display-font), Impact, sans-serif;
+    font-size:clamp(44px, 12vw, 72px);
+    text-transform:uppercase;
+    line-height:.88;
+    letter-spacing:-1.2px;
+    margin:0 0 18px;
+    color:#fff;
+    font-weight:400;
+    max-width:6.8ch;
+  }
+  h3 em { font-style:normal; color:#F5C842; }
+  p {
+    font-size:15px;
+    line-height:1.48;
+    color:rgba(255,255,255,.46);
+    margin:0;
+    font-family:Inter, system-ui, sans-serif;
+    max-width:16.5rem;
+  }
+  .card.active p {
+    color:rgba(255,255,255,.68);
+  }
+  .dots {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin:18px 0 0;
+    font-size:0;
+    line-height:0;
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+    -webkit-user-select:none;
+  }
+  .dot {
+    width:8px;
+    height:8px;
+    border-radius:999px;
+    background:rgba(255,255,255,.12);
+    display:inline-block;
+    transition:background .25s, width .25s;
+    touch-action:none;
+  }
+  .dot.active { width:22px; background:#F5C842; }
+  .phone-wrap {
+    display:flex;
+    justify-content:center;
+    pointer-events:none;
+  }
+  .phone {
+    width:280px;
+    background:#0A0A0A;
+    border-radius:48px;
+    padding:12px;
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,.04),
+      0 40px 80px -20px rgba(0,0,0,.7),
+      0 12px 28px -8px rgba(0,0,0,.5);
+  }
+  .screen {
+    display:block;
+    width:100%;
+    aspect-ratio:9 / 19.5;
+    object-fit:cover;
+    object-position:top center;
+    border-radius:38px;
+    transition:opacity .25s ease;
+  }
+  .screen.swap { opacity:0; }
+  @media (max-width:560px) {
+    .track {
+      padding:0 max(32px, calc((100% - min(320px, calc(100vw - 48px))) / 2)) 4px;
+      margin:0 -32px;
+    }
+    .phone { width:280px; }
+  }
+  @media (max-width:420px) {
+    .track { gap:14px; }
+    /* Narrower than viewport so the next card's edge peeks on the right (~25-35px hint). */
+    .slide { flex-basis:calc(100vw - 80px); max-width:calc(100vw - 80px); }
+    .card {
+      min-height:224px;
+      padding:18px 18px 16px;
+    }
+    .eyebrow {
+      font-size:12px;
+      margin-bottom:16px;
+    }
+    h3 {
+      font-size:clamp(38px, 11vw, 56px);
+      margin-bottom:16px;
+    }
+    p {
+      font-size:14px;
+      max-width:15.5rem;
+    }
+  }
+`;
