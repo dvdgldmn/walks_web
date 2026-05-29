@@ -127,8 +127,8 @@ export const COMPETITION_CAROUSEL_CSS = `
   }
   @media (max-width:420px) {
     .track { gap:14px; }
-    /* Narrower than viewport so the next card's edge peeks on the right (~25-35px hint). */
-    .slide { flex-basis:calc(100vw - 80px); max-width:calc(100vw - 80px); }
+    /* Narrower than viewport so the next card's edge peeks on the right (~35-45px hint). */
+    .slide { flex-basis:calc(100vw - 100px); max-width:calc(100vw - 100px); }
     .card {
       min-height:224px;
       padding:18px 18px 16px;
