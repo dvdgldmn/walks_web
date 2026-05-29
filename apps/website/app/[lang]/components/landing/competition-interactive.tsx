@@ -209,7 +209,7 @@ export function CompetitionInteractive({ screens }: { screens: Screen[] }) {
       const phoneWrap = shadow.querySelector<HTMLElement>('.phone-wrap');
       if (phoneWrap) {
         phoneWrap.style.pointerEvents = 'auto';
-        phoneWrap.style.touchAction = 'none';
+        phoneWrap.style.touchAction = 'pan-y';
         phoneWrap.style.cursor = 'grab';
         attachDrag(phoneWrap);
       }
