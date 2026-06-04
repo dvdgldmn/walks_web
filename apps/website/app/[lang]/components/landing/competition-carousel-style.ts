@@ -15,7 +15,7 @@ export const COMPETITION_CAROUSEL_CSS = `
     transition:transform .35s cubic-bezier(.2,.7,.2,1);
     user-select:none;
     -webkit-user-select:none;
-    touch-action:none;
+    touch-action:pan-y;
     cursor:grab;
   }
   .track.is-dragging { transition:none; cursor:grabbing; }
@@ -90,7 +90,7 @@ export const COMPETITION_CAROUSEL_CSS = `
     background:rgba(255,255,255,.12);
     display:inline-block;
     transition:background .25s, width .25s;
-    touch-action:none;
+    touch-action:pan-y;
   }
   .dot.active { width:22px; background:#F5C842; }
   .phone-wrap {
