@@ -497,6 +497,18 @@ function ShelterAnimalsManager() {
   const [items, setItems] = useState<EditableShelterAnimal[]>([]);
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState('');
+  const [saveStates, setSaveStates] = useState<
+    Record<number, { kind: 'saving' | 'saved' | 'error'; message: string }>
+  >({});
+
+  const clearSaveState = (index: number) => {
+    setSaveStates((current) => {
+      if (!(index in current)) return current;
+      const next = { ...current };
+      delete next[index];
+      return next;
+    });
+  };
 
   const loadItems = async () => {
     setLoading(true);
@@ -515,6 +527,7 @@ function ShelterAnimalsManager() {
   }, []);
 
   const updateItem = (index: number, patch: Partial<EditableShelterAnimal>) => {
+    clearSaveState(index);
     setItems((current) =>
       current.map((item, itemIndex) => (itemIndex === index ? { ...item, ...patch } : item)),
     );
@@ -526,10 +539,16 @@ function ShelterAnimalsManager() {
 
   const saveAnimal = async (item: EditableShelterAnimal, index: number) => {
     if (!item.id && !item.file) {
-      setStatus('New animal requires a photo before saving');
+      setSaveStates((current) => ({
+        ...current,
+        [index]: { kind: 'error', message: 'Add a photo before saving' },
+      }));
       return;
     }
-    setStatus(`Saving animal ${index + 1}...`);
+    setSaveStates((current) => ({
+      ...current,
+      [index]: { kind: 'saving', message: 'Saving…' },
+    }));
     const form = new FormData();
     form.set('pageType', item.pageType || 'shelter');
     form.set('nameAz', item.nameAz);
@@ -573,9 +592,18 @@ function ShelterAnimalsManager() {
           currentIndex === index ? { ...saved, file: null } : currentItem,
         ),
       );
-      setStatus('Animal saved');
+      setSaveStates((current) => ({
+        ...current,
+        [index]: { kind: 'saved', message: 'Saved ✓' },
+      }));
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'Failed to save animal');
+      setSaveStates((current) => ({
+        ...current,
+        [index]: {
+          kind: 'error',
+          message: error instanceof Error ? error.message : 'Save failed',
+        },
+      }));
     }
   };
 
@@ -593,10 +621,12 @@ function ShelterAnimalsManager() {
         .filter((_, itemIndex) => itemIndex !== index)
         .map((currentItem, itemIndex) => ({ ...currentItem, sortOrder: itemIndex })),
     );
+    setSaveStates({});
     setStatus('Animal removed');
   };
 
   const moveAnimal = (index: number, direction: -1 | 1) => {
+    setSaveStates({});
     setItems((current) => {
       const targetIndex = index + direction;
       if (targetIndex < 0 || targetIndex >= current.length) return current;
@@ -718,9 +748,19 @@ function ShelterAnimalsManager() {
               <label className="field"><span>Story EN</span><textarea className="input textarea tall-textarea" value={item.storyEn} onChange={(event) => updateItem(index, { storyEn: event.target.value })} /></label>
             </div>
             <div className="action-row">
-              <button className="primary-button" type="button" onClick={() => void saveAnimal(item, index)}>
-                Save animal
+              <button
+                className="primary-button"
+                type="button"
+                disabled={saveStates[index]?.kind === 'saving'}
+                onClick={() => void saveAnimal(item, index)}
+              >
+                {saveStates[index]?.kind === 'saving' ? 'Saving…' : 'Save animal'}
               </button>
+              {saveStates[index] ? (
+                <span className={`save-status is-${saveStates[index].kind}`} role="status" aria-live="polite">
+                  {saveStates[index].message}
+                </span>
+              ) : null}
             </div>
           </div>
         ))}

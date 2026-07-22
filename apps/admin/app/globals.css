@@ -275,6 +275,28 @@ a {
   flex-wrap: wrap;
 }
 
+.save-status {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.save-status.is-saving {
+  background: #f4f4f4;
+  color: #666;
+}
+
+.save-status.is-saved {
+  background: #eaf7ee;
+  color: #1d6d35;
+}
+
+.save-status.is-error {
+  background: #fff2f2;
+  color: #a22;
+}
+
 .checkbox-row {
   display: flex;
   align-items: center;
