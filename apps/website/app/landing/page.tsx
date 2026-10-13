@@ -5,7 +5,7 @@ import { HeroAnimation } from '../[lang]/components/landing/hero-animation';
 
 // Standalone AZ ad landing (walks.az/landing): hero block only — logo, slogan,
 // Lottie animation and a single "Get App" CTA. No nav links, no footer, noindex.
-const GET_APP_URL = 'https://walks.onelink.me/JjqT/9mczp2y4';
+const GET_APP_URL = 'https://walks.az/app';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings().catch(() => null);

@@ -16,7 +16,7 @@ type Props = {
   transparent?: boolean;
 };
 
-const GET_APP_URL = 'https://walks.onelink.me/JjqT/9mczp2y4';
+const GET_APP_URL = 'https://walks.az/app';
 const SOLID_STYLE: React.CSSProperties = {
   background: 'rgba(255,255,255,0.92)',
   backdropFilter: 'blur(14px)',

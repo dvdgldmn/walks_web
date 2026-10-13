@@ -7,7 +7,7 @@ type Props = {
   translations: PublicTranslation[];
 };
 
-const GET_APP_URL = 'https://walks.onelink.me/JjqT/9mczp2y4';
+const GET_APP_URL = 'https://walks.az/app';
 
 export function LandingHero({ lang, translations }: Props) {
   const t = (key: string, fallback: string) =>

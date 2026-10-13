@@ -72,7 +72,7 @@ export function SiteFooter({
             <ul>
               <li><a href={`/${lang}#how`}>{pickTranslation(translations, 'nav', 'how', 'How it works')}</a></li>
               <li><a href={`/${lang}#season`}>{pickTranslation(translations, 'nav', 'season', 'Seasons')}</a></li>
-              <li><a href="https://walks.onelink.me/JjqT/9mczp2y4" target="_blank" rel="noopener noreferrer">{lang === 'az' ? 'Tətbiqi yüklə' : 'Get app'}</a></li>
+              <li><a href="https://walks.az/app" target="_blank" rel="noopener noreferrer">{lang === 'az' ? 'Tətbiqi yüklə' : 'Get app'}</a></li>
             </ul>
           </div>
 
